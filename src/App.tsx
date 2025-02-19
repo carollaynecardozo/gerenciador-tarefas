@@ -1,8 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import "./App.css";
 
 function App() {
-  const [tasks, setTasks] = useState<string[]>([]);
+  const savedTasks = localStorage.getItem("tasks");
+  const initialTasks = savedTasks ? JSON.parse(savedTasks) : [];
+  const [tasks, setTasks] = useState<string[]>(initialTasks);
   const [newTask, setNewTask] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   // Função para adicionar uma nova tarefa à lista
   function addTask() {
@@ -19,7 +26,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className="container">
       <h1>Gerenciador de Tarefas</h1>
 
       <input
