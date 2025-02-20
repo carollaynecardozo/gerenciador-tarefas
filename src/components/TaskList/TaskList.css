@@ -1,0 +1,6 @@
+  
+  /* Estilo da lista de tarefas */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
