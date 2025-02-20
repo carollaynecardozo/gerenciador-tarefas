@@ -1,27 +1,20 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import TaskInput from "./components/TaskInput/TaskInput";
+import TaskList from "./components/TaskList/TaskList";
 import "./App.css";
 
-function App() {
-  // Pega as tarefas salvas no localStorage
+const App: React.FC = () => {
   const savedTasks = localStorage.getItem("tasks");
   const initialTasks = savedTasks ? JSON.parse(savedTasks) : [];
 
   // Estado para armazenar as tarefas
-  const [tasks, setTasks] =
-    useState<{ id: number; text: string; completed: boolean }[]>(initialTasks);
-  const [newTask, setNewTask] = useState("");
+  const [tasks, setTasks] = useState<Task[]>(initialTasks);
 
-  // Atualiza o localStorage sempre que as tarefas mudam
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  // Função para adicionar uma nova tarefa
-  function addTask() {
-    if (newTask.trim() === "") {
-      return; // Não adiciona tarefas vazias
-    }
-
+  const addTask = (newTask: string) => {
     const newTaskObject = {
       id: Date.now(),
       text: newTask,
@@ -29,8 +22,7 @@ function App() {
     };
 
     setTasks([...tasks, newTaskObject]);
-    setNewTask(""); // Limpa o campo de entrada
-  }
+  };
 
   // Função para remover uma tarefa
   function removeTask(id: number) {
@@ -46,46 +38,27 @@ function App() {
     );
   }
 
+  // Função para completar todas as tarefas
+  // function completeAllTasks() {
+  //   const completedTasks = tasks.map((task) => {
+  //     task.completed = true;
+  //     return task;
+  //   });
+
+  //   setTasks(completedTasks);
+  // }
+
   return (
     <div className="container">
       <h1>Gerenciador de Tarefas</h1>
-
-      <input
-        type="text"
-        placeholder="Digite uma nova tarefa"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-        onKeyDown={(e) => {
-          if (e.key === "Enter") {
-            addTask();
-          }
-        }}
+      <TaskInput onAddTask={addTask} />
+      <TaskList
+        tasks={tasks}
+        onRemoveTask={removeTask}
+        onToggleCompletion={toggleTaskCompletion}
       />
-
-      {/* Botão para adicionar uma nova tarefa */}
-      <button onClick={addTask}>Adicionar Tarefa</button>
-
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id} style={{ cursor: "pointer" }}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => toggleTaskCompletion(task.id)}
-            />
-            <span
-              style={{
-                textDecoration: task.completed ? "line-through" : "none",
-              }}
-            >
-              {task.text}
-            </span>
-            <button onClick={() => removeTask(task.id)}>Remover</button>
-          </li>
-        ))}
-      </ul>
     </div>
   );
-}
+};
 
 export default App;
