@@ -1,50 +1,72 @@
-# React + TypeScript + Vite
+# Gerenciador de Tarefas
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Sobre o Projeto
 
-Currently, two official plugins are available:
+O **Gerenciador de Tarefas** é uma aplicação web desenvolvida em **React** com **TypeScript** que permite adicionar, visualizar e remover tarefas. As tarefas são armazenadas no **Local Storage**, garantindo que persistam mesmo após o usuário recarregar a página.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠 Tecnologias Utilizadas
 
-## Expanding the ESLint configuration
+- **React**: Biblioteca para criação de interfaces.
+- **TypeScript**: Superset do JavaScript que adiciona tipagem estática.
+- **Vite**: Ferramenta para criação e otimização de projetos em React.
+- **CSS**: Estilização da interface.
+- **Local Storage**: Armazenamento local das tarefas.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 🏗 Passos para Construção
 
-- Configure the top-level `parserOptions` property like this:
+### 1️⃣ Configuração do Ambiente
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Rodando o projeto localmente usando **Vite**:
+
+```sh
+npm run dev
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### 2️⃣ Estruturando o **App.tsx**
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+O **App.tsx** gerencia o estado das tarefas e usa componentes separados para entrada e exibição das tarefas.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+#### 🔹 Estados Gerenciados
+
+- `tasks`: Lista de tarefas.
+- `newTask`: Texto da nova tarefa.
+
+#### 🔹 Efeito para Persistência de Dados
+
+Utilizamos `useEffect` para salvar as tarefas no **Local Storage**:
+
+```tsx
+useEffect(() => {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}, [tasks]);
 ```
+
+### 3️⃣ Criando o Componente `TaskInput.tsx`
+
+Este componente contém o campo de entrada e o botão para adicionar novas tarefas.
+
+### 4️⃣ Criando o Componente `TaskList.tsx`
+
+Este componente exibe a lista de tarefas e permite removê-las ao clicar.
+
+### 5️⃣ Integrando os Componentes no `App.tsx`
+
+Importamos e utilizamos os componentes.
+
+## 🚀 Funcionalidades
+
+✅ Adicionar tarefas pressionando **Enter** ou clicando no botão.
+✅ Listar tarefas na tela.
+✅ Completar tarefas clicando no checkbox.
+✅ Remover tarefas ao clicar nelas.
+✅ Armazenamento no **Local Storage**.
+
+## 📌 Conclusão
+
+Este projeto me ensinou sobre **componentização**, **gerenciamento de estado** e **persistência de dados** no React. Componentizar o código tornou a aplicação mais modular e reutilizável.
+
+💡 **Próximos passos:** Melhorar o design (responsividade e UX), adicionar edição de tarefas e fazer o deploy em um serviço de hosting.
+
+---
+
+### 🎯 Feito com dedicação e aprendizado! 🚀
