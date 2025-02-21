@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TaskInput from "./components/TaskInput/TaskInput";
 import TaskList from "./components/TaskList/TaskList";
-import "./App.css";
+import styles from "./App.module.css";
 
 const App: React.FC = () => {
   const savedTasks = localStorage.getItem("tasks");
@@ -49,9 +49,11 @@ const App: React.FC = () => {
   // }
 
   return (
-    <div className="container">
+    <div className={styles.container}>
       <h1>Gerenciador de Tarefas</h1>
-      <TaskInput onAddTask={addTask} />
+      <div className={styles.inputContainer}>
+        <TaskInput onAddTask={addTask} />
+      </div>
       <TaskList
         tasks={tasks}
         onRemoveTask={removeTask}

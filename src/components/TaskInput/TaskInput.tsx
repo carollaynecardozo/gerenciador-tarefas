@@ -1,6 +1,6 @@
 // src/TaskInput.tsx
 import React, { useState } from "react";
-import "./TaskInput.css";
+import styles from "./TaskInput.module.css";
 
 interface TaskInputProps {
   onAddTask: (task: string) => void;
@@ -17,7 +17,7 @@ const TaskInput: React.FC<TaskInputProps> = ({ onAddTask }) => {
   };
 
   return (
-    <div>
+    <div className={styles.inputContainer}>
       <input
         type="text"
         value={newTaskText}

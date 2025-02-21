@@ -1,5 +1,5 @@
 import React from "react";
-import "./Task.css";
+import styles from "./Task.module.css";
 
 interface TaskProps {
   task: Task;
@@ -9,20 +9,19 @@ interface TaskProps {
 
 const Task: React.FC<TaskProps> = ({ task, onRemove, onToggleCompletion }) => {
   return (
-    <li>
-      <input
-        type="checkbox"
-        checked={task.completed}
-        onChange={onToggleCompletion}
-      />
-      <span
-        style={{
-          textDecoration: task.completed ? "line-through" : "none",
+    <li className={styles.task} onClick={onToggleCompletion}>
+      <input type="checkbox" checked={task.completed} />
+      <label className={`${task.completed ? styles.completed : ""}`}>
+        {task.text}
+      </label>
+      <button
+        onClick={(event) => {
+          event.stopPropagation();
+          onRemove();
         }}
       >
-        {task.text}
-      </span>
-      <button onClick={onRemove}>Remover</button>
+        Remover
+      </button>
     </li>
   );
 };

@@ -1,7 +1,7 @@
 // src/TaskList.tsx
 import React from "react";
 import Task from "../Task/Task";
-import "./TaskList.css";
+import styles from "./TaskList.module.css";
 
 interface TaskListProps {
   tasks: Task[];
@@ -15,7 +15,7 @@ const TaskList: React.FC<TaskListProps> = ({
   onToggleCompletion,
 }) => {
   return (
-    <ul>
+    <ul className={styles.taskList}>
       {tasks.map((task) => (
         <Task
           key={task.id}
